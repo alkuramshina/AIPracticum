@@ -43,17 +43,20 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\Configuration\UnitSettings.cs" />
      <Compile Include="Assets\Scripts\Configuration\AnimationConfiguration.cs" />
-     <Compile Include="Assets\Scripts\Extended.cs" />
+     <Compile Include="Assets\Scripts\Enums\IgnoreAxis.cs" />
      <Compile Include="Assets\Scripts\UnitAnimation.cs" />
+     <Compile Include="Assets\Scripts\CameraControls.cs" />
+     <Compile Include="Assets\PlayerControls.cs" />
+     <Compile Include="Assets\Scripts\Enums\AnimationType.cs" />
      <Folder Include="Assets" />
      <Folder Include="Assets\Materials" />
      <Folder Include="Assets\Settings" />
      <Folder Include="Assets\Model" />
+     <Folder Include="Assets\Model\Animations" />
      <Folder Include="Assets\Scripts" />
      <Folder Include="Assets\Scripts\Configuration" />
-     <Folder Include="Assets\Model\Materials" />
+     <Folder Include="Assets\Scripts\Enums" />
      <Folder Include="Assets\Scenes" />
-     <Folder Include="Assets\Model\Animations" />
      <Folder Include="Assets\Resources" />
      <Reference Include="UnityEngine">
      <HintPath>C:\Program Files\Unity\Hub\Editor\2021.3.28f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>

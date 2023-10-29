@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2ba8f511365a3f640b4ed7b1a24074e0, type: 3}
-  m_Name: New Unit Settings
+  m_Name: RedUnitSettings 1
   m_EditorClassIdentifier: 
-  maxHealth: 0
-  speed: 0
+  maxHealth: 10
+  speed: 10
+  missChance: 10
+  critChance: 10
   quickAttack:
-    damage: 0
-    chanceToUse: 0
+    damage: 10
+    chanceToUse: 80
   strongAttack:
-    damage: 0
-    chanceToUse: 0
-  missChance: 0
-  critChance: 0
+    damage: 20
+    chanceToUse: 20

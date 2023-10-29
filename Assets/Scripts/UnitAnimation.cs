@@ -1,5 +1,6 @@
 ﻿using System;
 using Configuration;
+using Enums;
 using UnityEngine;
 using Zenject;
 

@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using Enums;
+using RotaryHeart.Lib.SerializableDictionary;
 using UnityEngine;
 
 namespace Configuration
@@ -6,8 +9,11 @@ namespace Configuration
 	[CreateAssetMenu(menuName = "Animation Configuration")]
 	public class AnimationConfiguration : ScriptableObject
 	{
-		[SerializeField] private AnimationKeyDictionary _keys;
+		[SerializeField] private AnimationKeyDictionary keys;
 
-		public IReadOnlyDictionary<AnimationType, string> GetDictionary => _keys.Clone();
+		public IReadOnlyDictionary<AnimationType, string> GetDictionary => keys.Clone();
 	}
+	
+	[Serializable]
+	public class AnimationKeyDictionary : SerializableDictionaryBase<AnimationType, string> { }
 }

@@ -6,19 +6,23 @@ namespace Configuration
     [CreateAssetMenu]
     public class UnitSettings : ScriptableObject
     {
-        [SerializeField, Tooltip("Максимальное здоровье")] public int maxHealth;
-        [SerializeField, Tooltip("Скорость передвижения")] public float speed;
-        [SerializeField, Tooltip("Быстрая/Слабая атака")] public Attack quickAttack;
-        [SerializeField, Tooltip("Медленная/Сильная атака")] public Attack strongAttack;
-        [SerializeField, Tooltip("Шанс промаха")] public float missChance;
-        [SerializeField, Tooltip("Шанс удвоенного урона")] public float critChance;
+        [Header("Main Stats")] 
+        [Tooltip("Максимальное здоровье")] public int maxHealth;
+        [Tooltip("Скорость передвижения")] public float speed;
+        
+        [Header("Attacks")] 
+        [Tooltip("Шанс промаха")] public float missChance;
+        [Tooltip("Шанс удвоенного урона")] public float critChance;
+        [Tooltip("Быстрая/Слабая атака")] public AttackSettings quickAttack;
+        [Tooltip("Медленная/Сильная атака")] public AttackSettings strongAttack;
+        
     }
 
 
     [Serializable]
-    public struct Attack
+    public struct AttackSettings
     {
-        [SerializeField, Tooltip("Урон")] public float damage;
-        [SerializeField, Tooltip("Шанс использования")] public float chanceToUse;
+        [Tooltip("Урон")] public float damage;
+        [Tooltip("Шанс использования")] public float chanceToUse;
     }
 }

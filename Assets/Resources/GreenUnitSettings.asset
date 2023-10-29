@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ba8f511365a3f640b4ed7b1a24074e0, type: 3}
+  m_Name: GreenUnitSettings
+  m_EditorClassIdentifier: 
+  maxHealth: 10
+  speed: 10
+  missChance: 10
+  critChance: 10
+  quickAttack:
+    damage: 10
+    chanceToUse: 80
+  strongAttack:
+    damage: 20
+    chanceToUse: 20
