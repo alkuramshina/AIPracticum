@@ -16,6 +16,7 @@ namespace Configuration
         [Tooltip("Быстрая/Слабая атака")] public AttackSettings quickAttack;
         [Tooltip("Медленная/Сильная атака")] public AttackSettings strongAttack;
         
+        [SerializeField] public Transform unitPrefab;
     }
 
 

@@ -48,10 +48,10 @@
      <Compile Include="Assets\Plugins\Zenject\Source\Install\IInstaller.cs" />
      <Compile Include="Assets\Plugins\Zenject\Source\Providers\IFactoryProvider.cs" />
      <Compile Include="Assets\Plugins\Zenject\Source\Install\MonoInstaller.cs" />
-     <Compile Include="Assets\Plugins\Zenject\Source\Providers\MethodProviderUntyped.cs" />
      <Compile Include="Assets\Plugins\Zenject\Source\Internal\MiscExtensions.cs" />
      <Compile Include="Assets\Plugins\Zenject\Source\Providers\ComponentProviders\GetFromPrefabComponentProvider.cs" />
      <Compile Include="Assets\Plugins\Zenject\Source\Providers\SubContainerCreators\SubContainerCreatorDynamicContext.cs" />
+     <Compile Include="Assets\Plugins\Zenject\Source\Providers\MethodProviderUntyped.cs" />
      <Compile Include="Assets\Plugins\Zenject\Source\Binding\BindInfo\GameObjectCreationParameters.cs" />
      <Compile Include="Assets\Plugins\Zenject\Source\Factories\KeyedFactory.cs" />
      <Compile Include="Assets\Plugins\Zenject\Source\Binding\Binders\Factory\Pooling\MemoryPoolInitialSizeBinder.cs" />
