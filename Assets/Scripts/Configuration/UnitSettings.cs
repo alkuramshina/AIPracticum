@@ -11,8 +11,8 @@ namespace Configuration
         [Tooltip("Скорость передвижения")] public float speed;
         
         [Header("Attacks")] 
-        [Tooltip("Шанс промаха")] public float missChance;
-        [Tooltip("Шанс удвоенного урона")] public float critChance;
+        [Tooltip("Шанс промаха"), Range(1, 100)] public float missChance;
+        [Tooltip("Шанс удвоенного урона"), Range(1, 100)] public float critChance;
         [Tooltip("Быстрая/Слабая атака")] public AttackSettings quickAttack;
         [Tooltip("Медленная/Сильная атака")] public AttackSettings strongAttack;
         
@@ -24,6 +24,6 @@ namespace Configuration
     public struct AttackSettings
     {
         [Tooltip("Урон")] public float damage;
-        [Tooltip("Шанс использования")] public float chanceToUse;
+        [Tooltip("Шанс использования"), Range(1, 100)] public float chanceToUse;
     }
 }

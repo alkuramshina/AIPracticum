@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class UnitSpawner : MonoBehaviour
 {
-    [SerializeField, Tooltip("Конфигурация юнитов")] 
+    [SerializeField, Tooltip("Стартовая цель")]
+    private Transform defaultTarget;
+    
+    [SerializeField, Tooltip("Конфигурация юнитов")]
     private UnitSettings baseUnitSettings;
     
     [SerializeField, Tooltip("Материал юнитов")] 
@@ -40,7 +43,7 @@ public class UnitSpawner : MonoBehaviour
             return;
         }
         
-        var newUnit = Unit.Spawn(baseUnitSettings, baseMaterial, unitSpawnPoint);
+        var newUnit = Unit.Spawn(baseUnitSettings, baseMaterial, unitSpawnPoint, defaultTarget);
         _spawnedUnits.Add(newUnit);
         
         _spawnTimer = 0f;

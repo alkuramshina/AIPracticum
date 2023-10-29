@@ -50,9 +50,11 @@
      <Compile Include="Assets\Scripts\Configuration\AnimationSettings.cs" />
      <Compile Include="Assets\Scripts\UnitAnimation.cs" />
      <Compile Include="Assets\Scripts\Unit.cs" />
+     <Compile Include="Assets\Scripts\Enums\UnitState.cs" />
      <Folder Include="Assets" />
      <Folder Include="Assets\Materials" />
      <Folder Include="Assets\Settings" />
+     <Folder Include="Assets\Prefabs" />
      <Folder Include="Assets\Scripts" />
      <Folder Include="Assets\Scripts\Configuration" />
      <Folder Include="Assets\Scripts\Enums" />
