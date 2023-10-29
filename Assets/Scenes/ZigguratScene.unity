@@ -890,10 +890,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movingSpeed: 20
   rotationSpeed: 20
-  edgeScrollIsEnabled: 0
-  edgeScrollingSize: 10
-  dragPanIsEnabled: 0
-  dragPanSpeed: 10
   maxFieldOfView: 100
   minFieldOfView: 10
   zoomSpeed: 10
@@ -2835,6 +2831,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1010354911}
   - component: {fileID: 1010354913}
+  - component: {fileID: 1010354914}
   m_Layer: 0
   m_Name: Gate_Red
   m_TagString: Untagged
@@ -2872,6 +2869,20 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 30, y: 30, z: 30}
   m_Center: {x: 0, y: 12.45, z: 0}
+--- !u!114 &1010354914
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1010354910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cc09b946b882bc418e6024081b8fe35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitSettings: {fileID: 11400000, guid: 534a61300f3eff040869465c54d80814, type: 2}
+  unitMaterial: {fileID: 2100000, guid: 977d000e530e1dc40b7c9580afd40e58, type: 2}
 --- !u!1001 &1031826336
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -48,6 +48,7 @@
      <Compile Include="Assets\PlayerControls.cs" />
      <Compile Include="Assets\Scripts\Enums\AnimationType.cs" />
      <Compile Include="Assets\Scripts\Configuration\AnimationSettings.cs" />
+     <Compile Include="Assets\Scripts\UnitSpawner.cs" />
      <Folder Include="Assets" />
      <Folder Include="Assets\Materials" />
      <Folder Include="Assets\Settings" />
