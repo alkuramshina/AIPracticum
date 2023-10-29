@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Configuration;
 using Enums;
 using UnityEngine;
@@ -10,7 +11,7 @@ public class UnitAnimation : MonoBehaviour
 	[SerializeField] private Animator _animator;
 	[SerializeField] private Collider _collider;
 
-	[Inject] private AnimationConfiguration _animationConfiguration;
+	[Inject] private IReadOnlyDictionary<AnimationType, string> _animationConfiguration;
 
 	/// <summary>
 	/// Событие, вызываемое по окончанию анимации
@@ -23,7 +24,7 @@ public class UnitAnimation : MonoBehaviour
 	/// <remarks>Если передается 0f - персонаж в Idle анимации, если >0f - персонаж ходит</remarks>
 	public void Moving(float direction)
 	{
-		_animator.SetFloat(_animationConfiguration.GetDictionary[AnimationType.Move], direction);
+		_animator.SetFloat(_animationConfiguration[AnimationType.Move], direction);
 	}
 
 	/// <summary>
@@ -32,7 +33,7 @@ public class UnitAnimation : MonoBehaviour
 	/// <param name="key"></param>
 	public void StartAnimation(string key)
 	{
-		_animator.SetFloat(_animationConfiguration.GetDictionary[AnimationType.Move], 0f);
+		_animator.SetFloat(_animationConfiguration[AnimationType.Move], 0f);
 		_animator.SetTrigger(key);
 	}
 

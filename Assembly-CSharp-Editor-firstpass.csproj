@@ -818,6 +818,12 @@
      <Reference Include="Unity.VisualScripting.State">
      <HintPath>C:\Projects\Unity\Netology\AIPracticum\Library\ScriptAssemblies\Unity.VisualScripting.State.dll</HintPath>
      </Reference>
+     <Reference Include="com.unity.cinemachine.editor">
+     <HintPath>C:\Projects\Unity\Netology\AIPracticum\Library\ScriptAssemblies\com.unity.cinemachine.editor.dll</HintPath>
+     </Reference>
+     <Reference Include="Cinemachine">
+     <HintPath>C:\Projects\Unity\Netology\AIPracticum\Library\ScriptAssemblies\Cinemachine.dll</HintPath>
+     </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp-firstpass.csproj">

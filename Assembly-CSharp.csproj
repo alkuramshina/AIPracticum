@@ -42,12 +42,12 @@
   </PropertyGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\Configuration\UnitSettings.cs" />
-     <Compile Include="Assets\Scripts\Configuration\AnimationConfiguration.cs" />
      <Compile Include="Assets\Scripts\Enums\IgnoreAxis.cs" />
      <Compile Include="Assets\Scripts\UnitAnimation.cs" />
-     <Compile Include="Assets\Scripts\CameraControls.cs" />
+     <Compile Include="Assets\Scripts\CameraController.cs" />
      <Compile Include="Assets\PlayerControls.cs" />
      <Compile Include="Assets\Scripts\Enums\AnimationType.cs" />
+     <Compile Include="Assets\Scripts\Configuration\AnimationSettings.cs" />
      <Folder Include="Assets" />
      <Folder Include="Assets\Materials" />
      <Folder Include="Assets\Settings" />
@@ -780,6 +780,12 @@
      </Reference>
      <Reference Include="Unity.VisualScripting.State">
      <HintPath>C:\Projects\Unity\Netology\AIPracticum\Library\ScriptAssemblies\Unity.VisualScripting.State.dll</HintPath>
+     </Reference>
+     <Reference Include="com.unity.cinemachine.editor">
+     <HintPath>C:\Projects\Unity\Netology\AIPracticum\Library\ScriptAssemblies\com.unity.cinemachine.editor.dll</HintPath>
+     </Reference>
+     <Reference Include="Cinemachine">
+     <HintPath>C:\Projects\Unity\Netology\AIPracticum\Library\ScriptAssemblies\Cinemachine.dll</HintPath>
      </Reference>
   </ItemGroup>
   <ItemGroup>

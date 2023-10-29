@@ -29,30 +29,30 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             ""actions"": [
                 {
                     ""name"": ""Movement"",
-                    ""type"": ""PassThrough"",
+                    ""type"": ""Value"",
                     ""id"": ""bb9250ec-264d-456c-8ff3-d7b566b158b1"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Scale"",
-                    ""type"": ""Button"",
+                    ""name"": ""Zoom"",
+                    ""type"": ""PassThrough"",
                     ""id"": ""9b74a2a9-78b6-4198-86ca-79b9d0d14414"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": ""Delta"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {
                     ""name"": ""Rotation"",
-                    ""type"": ""Button"",
+                    ""type"": ""Value"",
                     ""id"": ""a1ad54c9-07f2-4b4b-be9e-6c58fa85f81c"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -112,24 +112,46 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": """",
-                    ""id"": ""19b4294c-0844-4e47-9e59-07ada810dd7f"",
-                    ""path"": """",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Scale"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""900670fc-d879-4fe2-9a23-cf26116bce85"",
-                    ""path"": """",
+                    ""name"": ""QE"",
+                    ""id"": ""63006c41-5b47-4bb9-ba11-4e2a946b29b3"",
+                    ""path"": ""1DAxis"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Rotation"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""ef1cc232-9102-4ad7-a877-b3e74de8ac1d"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Rotation"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""8c19ade3-7671-47a2-98a7-b01d887a5302"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Rotation"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""69de20dc-4c8f-4072-856a-2eacdadd5f57"",
+                    ""path"": ""<Mouse>/scroll"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Zoom"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -141,7 +163,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         // Camera
         m_Camera = asset.FindActionMap("Camera", throwIfNotFound: true);
         m_Camera_Movement = m_Camera.FindAction("Movement", throwIfNotFound: true);
-        m_Camera_Scale = m_Camera.FindAction("Scale", throwIfNotFound: true);
+        m_Camera_Zoom = m_Camera.FindAction("Zoom", throwIfNotFound: true);
         m_Camera_Rotation = m_Camera.FindAction("Rotation", throwIfNotFound: true);
     }
 
@@ -205,14 +227,14 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Camera;
     private List<ICameraActions> m_CameraActionsCallbackInterfaces = new List<ICameraActions>();
     private readonly InputAction m_Camera_Movement;
-    private readonly InputAction m_Camera_Scale;
+    private readonly InputAction m_Camera_Zoom;
     private readonly InputAction m_Camera_Rotation;
     public struct CameraActions
     {
         private @PlayerControls m_Wrapper;
         public CameraActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Movement => m_Wrapper.m_Camera_Movement;
-        public InputAction @Scale => m_Wrapper.m_Camera_Scale;
+        public InputAction @Zoom => m_Wrapper.m_Camera_Zoom;
         public InputAction @Rotation => m_Wrapper.m_Camera_Rotation;
         public InputActionMap Get() { return m_Wrapper.m_Camera; }
         public void Enable() { Get().Enable(); }
@@ -226,9 +248,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Movement.started += instance.OnMovement;
             @Movement.performed += instance.OnMovement;
             @Movement.canceled += instance.OnMovement;
-            @Scale.started += instance.OnScale;
-            @Scale.performed += instance.OnScale;
-            @Scale.canceled += instance.OnScale;
+            @Zoom.started += instance.OnZoom;
+            @Zoom.performed += instance.OnZoom;
+            @Zoom.canceled += instance.OnZoom;
             @Rotation.started += instance.OnRotation;
             @Rotation.performed += instance.OnRotation;
             @Rotation.canceled += instance.OnRotation;
@@ -239,9 +261,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Movement.started -= instance.OnMovement;
             @Movement.performed -= instance.OnMovement;
             @Movement.canceled -= instance.OnMovement;
-            @Scale.started -= instance.OnScale;
-            @Scale.performed -= instance.OnScale;
-            @Scale.canceled -= instance.OnScale;
+            @Zoom.started -= instance.OnZoom;
+            @Zoom.performed -= instance.OnZoom;
+            @Zoom.canceled -= instance.OnZoom;
             @Rotation.started -= instance.OnRotation;
             @Rotation.performed -= instance.OnRotation;
             @Rotation.canceled -= instance.OnRotation;
@@ -265,7 +287,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     public interface ICameraActions
     {
         void OnMovement(InputAction.CallbackContext context);
-        void OnScale(InputAction.CallbackContext context);
+        void OnZoom(InputAction.CallbackContext context);
         void OnRotation(InputAction.CallbackContext context);
     }
 }

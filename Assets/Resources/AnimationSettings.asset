@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d4f13b1fe94f3a4f9217b43f2817697, type: 3}
-  m_Name: AnimationConfiguration
+  m_Script: {fileID: 11500000, guid: 663366954a2c4d5a80e5fe3931d3a7ba, type: 3}
+  m_Name: AnimationSettings
   m_EditorClassIdentifier: 
-  _keys:
+  keys:
     reorderableList:
       canAdd: 1
       canRemove: 1
@@ -35,10 +35,10 @@ MonoBehaviour:
       elementIcon: {fileID: 0}
     reqReferences: {fileID: 0}
     isExpanded: 1
-    _keyValues: 00010203
-    _keys: 00010203
+    _keyValues: 01000203
+    _keys: 01000203
     _values:
+    - FastAttack
     - Movement
-    - Fast
-    - Strong
+    - StrongAttack
     - Die

@@ -7,30 +7,30 @@
             "actions": [
                 {
                     "name": "Movement",
-                    "type": "PassThrough",
+                    "type": "Value",
                     "id": "bb9250ec-264d-456c-8ff3-d7b566b158b1",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
-                    "name": "Scale",
-                    "type": "Button",
+                    "name": "Zoom",
+                    "type": "PassThrough",
                     "id": "9b74a2a9-78b6-4198-86ca-79b9d0d14414",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "Delta",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
                 },
                 {
                     "name": "Rotation",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "a1ad54c9-07f2-4b4b-be9e-6c58fa85f81c",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -90,24 +90,46 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "",
-                    "id": "19b4294c-0844-4e47-9e59-07ada810dd7f",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Scale",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "900670fc-d879-4fe2-9a23-cf26116bce85",
-                    "path": "",
+                    "name": "QE",
+                    "id": "63006c41-5b47-4bb9-ba11-4e2a946b29b3",
+                    "path": "1DAxis",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Rotation",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "ef1cc232-9102-4ad7-a877-b3e74de8ac1d",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Rotation",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "8c19ade3-7671-47a2-98a7-b01d887a5302",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Rotation",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "69de20dc-4c8f-4072-856a-2eacdadd5f57",
+                    "path": "<Mouse>/scroll",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Zoom",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
