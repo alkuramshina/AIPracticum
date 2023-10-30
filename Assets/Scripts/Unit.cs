@@ -6,15 +6,17 @@ using UnityEngine;
 public class Unit : ClickableElement
 {
     private Transform _defaultTarget;
-    private Vector3 _currentTarget;
+    
+    private Vector3 _currentPositionTarget;
+    private Unit _currentUnitTarget;
     
     private UnitSettings _unitSettings;
     
     private int _health;
     private UnitState _state;
 
-    private float _attackDistance = 1f;
-    private float _seekingDistance = 5f;
+    private float _attackDistance = 5f;
+    private float _seekingDistance = 10f;
 
     private CharacterController _characterController;
 
@@ -27,36 +29,36 @@ public class Unit : ClickableElement
     {
         UpdateState();
 
-        if (_state == UnitState.Fighting)
-        {
-            UpdateFightingBehavior();
-        }
-        else
-        {
-            UpdateMovingBehavior();
-        }
+        UpdateFightingBehavior();
+        UpdateMovingBehavior();
         
         base.Update();
     }
 
     private void UpdateState()
     {
-        // if anyone is around + its attack distance => Fighting
-        // if anyone is around => Seeking
-        // if at defaultTarget => Idle
-        // Wandering
-        
+        // Если допреследовались до расстояния атаки, переходим в атаку
+        if (_state == UnitState.Pursuing
+            && Vector3.Distance(transform.position, _currentPositionTarget) < _attackDistance)
+        {
+            _state = UnitState.Fighting;
+        }
+        // Если в атаке отошли далеко, возвращаемся к преследованию
+        else if (_state == UnitState.Fighting
+            && Vector3.Distance(transform.position, _currentPositionTarget) > _attackDistance)
+        {
+            _state = UnitState.Pursuing;
+        }
         // Если еще не дошли до центра или отошли от него далеко
-        if (_state != UnitState.Wandering
-            || Vector3.Distance(transform.position, _currentTarget) >_seekingDistance)
+        else if (_state == UnitState.Wandering
+                 && Vector3.Distance(transform.position, _currentPositionTarget) > _seekingDistance)
         {
             _state = UnitState.Seeking;
-            _currentTarget = _defaultTarget.position;
+            _currentPositionTarget = _defaultTarget.position;
         }
-
         // Если дошли до центра (или любой другой желанной точки)
-        if (_state == UnitState.Seeking
-            && Vector3.Distance(transform.position, _currentTarget) < _seekingDistance)
+        else if (_state == UnitState.Seeking
+                 && Vector3.Distance(transform.position, _currentPositionTarget) < _seekingDistance)
         {
             _state = UnitState.Wandering;
         }
@@ -64,7 +66,7 @@ public class Unit : ClickableElement
 
     private void UpdateFightingBehavior()
     {
-        if (_state is not UnitState.Fighting)
+        if (_state != UnitState.Fighting)
         {
             return;
         }
@@ -72,19 +74,19 @@ public class Unit : ClickableElement
 
     private void UpdateMovingBehavior()
     {
-        if (_state is UnitState.Fighting)
+        if (_state == UnitState.Fighting)
         {
             return;
         }
         
-        transform.LookAt(_currentTarget);
+        transform.LookAt(_currentPositionTarget);
 
         Vector3 steering;
         switch (_state)
         {
             case UnitState.Pursuing:
             case UnitState.Seeking:
-                steering = SteeringBehavior.Seek(transform.position, _currentTarget, _unitSettings.speed);
+                steering = SteeringBehavior.Seek(transform.position, _currentPositionTarget, _unitSettings.speed);
                 break;
             case UnitState.Wandering:
                 steering = SteeringBehavior.Wander(transform.position, _unitSettings.speed);
@@ -96,7 +98,26 @@ public class Unit : ClickableElement
 
         transform.position += steering * Time.deltaTime;
     }
-    
+
+    private void OnTriggerEnter(Collider other)
+    {
+        // Если уже завязались, не переключаемся
+        if (_state is UnitState.Pursuing or UnitState.Fighting)
+        {
+            return;
+        }
+        
+        // Если в сферу с триггером вошел юнит другого цвета, переключаемся на него
+        if (other.TryGetComponent(out Unit anotherUnit) && anotherUnit.GetUnitType() != GetUnitType())
+        {
+            _state = UnitState.Pursuing;
+            _currentUnitTarget = anotherUnit;
+            _currentPositionTarget = anotherUnit.transform.position;
+        }
+    }
+
+    public UnitType GetUnitType() => _unitSettings.unitType;
+
     public static Unit Spawn(UnitSettings unitSettings, Material material,
         Transform spawnPoint, Transform defaultTarget)
     {
