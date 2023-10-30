@@ -19,6 +19,10 @@ public class CameraController : MonoBehaviour
     [SerializeField] private bool edgeScrollingEnabled;
     [SerializeField] private float edgeScrollingSize;
     
+    [SerializeField] private bool dragPanEnabled;
+    private bool _dragPanMoveActive;
+    private Vector2 _lastMousePosition;
+    
     private PlayerControls _playerControls;
 
     private void Start()
@@ -59,8 +63,30 @@ public class CameraController : MonoBehaviour
                 movementDirection.z += 1f;
             }
         }
-        
-        
+
+        if (dragPanEnabled)
+        {
+            if (Input.GetMouseButtonDown(1))
+            {
+                _dragPanMoveActive = true;
+                _lastMousePosition = Input.mousePosition;
+            }
+            
+            if (Input.GetMouseButtonUp(1))
+            {
+                _dragPanMoveActive = false;
+            }
+
+            if (_dragPanMoveActive)
+            {
+                var mouseMovementDelta = (Vector2) Input.mousePosition - _lastMousePosition;
+
+                movementDirection.x = mouseMovementDelta.x;
+                movementDirection.z = mouseMovementDelta.y;
+                
+                _lastMousePosition = Input.mousePosition;
+            }
+        }
         
         var moveDistance = movingSpeed * Time.deltaTime;
         transform.position += movementDirection * moveDistance;
