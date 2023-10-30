@@ -1,61 +1,90 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
+using System.Collections;
 using Configuration;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UnitSettingsUI : MonoBehaviour
 {
     [SerializeField] private UnitSpawner spawner;
-    [SerializeField] private Transform parentPanel;
     
-    [SerializeField] private Transform inputGroupPrefab;
-    [SerializeField] private TextMeshProUGUI inputLabelPrefab;
-    [SerializeField] private TMP_InputField inputPrefab;
+    [SerializeField] private TMP_InputField maxHealthInput;
+    [SerializeField] private TMP_InputField speedInput;
+    [SerializeField] private TMP_InputField missChanceInput;
+    [SerializeField] private TMP_InputField critChanceInput;
+    [SerializeField] private TMP_InputField quickAttackDamageInput;
+    [SerializeField] private TMP_InputField quickAttackChanceInput;
+    [SerializeField] private TMP_InputField strongAttackDamageInput;
+    [SerializeField] private TMP_InputField strongAttackChanceInput;
 
-    private UnitSettings _dirtySettings;
+    [SerializeField] private Button closeButton;
+
+    private float _menuOffset;
     private bool _isOpened;
 
-    private void Awake()
+    private void Start()
     {
-        _dirtySettings = spawner.GetCurrentSettings();
+        closeButton.onClick.AddListener(OnClose);
         
-        FillSettingsForm();
+        _menuOffset = transform.localScale.x / 2;
         
-        _isOpened = false;
-        gameObject.SetActive(false);
+        FillSettingsForm(spawner.GetCurrentSettings());
     }
     
     private void Open()
     {
         _isOpened = true;
-        gameObject.SetActive(true);
+        StartCoroutine(SlideClose());
+    }
+ 
+    private IEnumerator SlideClose()
+    {
+        while (_menuOffset > .3f)
+        {
+            transform.position = Vector3.Lerp(transform.position, new Vector3(transform.position.x + _menuOffset,
+                transform.position.y,
+                transform.position.z), Time.deltaTime * 10f);
+
+            _menuOffset -= Time.deltaTime;
+            
+            yield return new WaitForSeconds(Time.deltaTime);
+        }
     }
 
-    private void Close()
+    private void OnClose()
     {
-        spawner.ChangeUnitSettings(_dirtySettings);
-        
-        gameObject.SetActive(false);
+        var unitSettings = GetSettingsFromForm();
+        spawner.ChangeUnitSettings(unitSettings);
+
         _isOpened = false;
     }
-    
-    private void FillSettingsForm()
-    {
-        var fieldsToAdd = typeof(UnitSettings).GetFieldsToShowInSettings(_dirtySettings);
-        
-        foreach (var (fieldTitle, fieldValue) in fieldsToAdd)
-        {
-            var inputGroup = Instantiate(inputGroupPrefab, parentPanel);
-            
-            var text = Instantiate(inputLabelPrefab, inputGroup);
-            text.text = fieldTitle;
 
-            var input = Instantiate(inputPrefab, inputGroup);
-            input.text = fieldValue;
-        }
+    private UnitSettings GetSettingsFromForm()
+    {
+        var unitSettings = spawner.GetCurrentSettings();
+
+        maxHealthInput.TryGetValueTo(ref unitSettings.maxHealth);
+        speedInput.TryGetValueTo(ref unitSettings.speed);
+        critChanceInput.TryGetValueTo(ref unitSettings.critChance);
+        missChanceInput.TryGetValueTo(ref unitSettings.missChance);
+        quickAttackDamageInput.TryGetValueTo(ref unitSettings.quickAttack.damage);
+        quickAttackChanceInput.TryGetValueTo(ref unitSettings.quickAttack.chanceToUse);
+        strongAttackDamageInput.TryGetValueTo(ref unitSettings.strongAttack.damage);
+        strongAttackChanceInput.TryGetValueTo(ref unitSettings.strongAttack.chanceToUse);
+
+        return unitSettings;
+    }
+
+    private void FillSettingsForm(UnitSettings settings)
+    {
+        maxHealthInput.text = $"{settings.maxHealth}";
+        speedInput.text = $"{settings.speed}";
+        critChanceInput.text = $"{settings.critChance}";
+        missChanceInput.text = $"{settings.missChance}";
+        quickAttackDamageInput.text = $"{settings.quickAttack.damage}";
+        quickAttackChanceInput.text = $"{settings.quickAttack.chanceToUse}";
+        strongAttackDamageInput.text = $"{settings.strongAttack.damage}";
+        strongAttackChanceInput.text = $"{settings.strongAttack.chanceToUse}";
     }
 }

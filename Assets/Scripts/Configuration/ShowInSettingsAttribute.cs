@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using Unity.VisualScripting;
 
 namespace Configuration
@@ -46,6 +47,21 @@ namespace Configuration
             }
 
             return resultingFields;
+        }
+        
+        public static void TryGetValueTo(this TMP_InputField inputField, ref float objectValue)
+        {
+            if (float.TryParse(inputField.text, out var value))
+            {
+                objectValue = value;
+            }
+        }
+        public static void TryGetValueTo(this TMP_InputField inputField, ref int objectValue)
+        {
+            if (int.TryParse(inputField.text, out var value))
+            {
+                objectValue = value;
+            }
         }
     }
 }
