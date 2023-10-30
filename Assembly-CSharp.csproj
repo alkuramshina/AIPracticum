@@ -43,10 +43,10 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\Utils\ShowInSettingsAttribute.cs" />
      <Compile Include="Assets\Scripts\Configuration\UnitSettings.cs" />
-     <Compile Include="Assets\Scripts\UnitSpawner.cs" />
+     <Compile Include="Assets\Scripts\Spawn\UnitSpawner.cs" />
      <Compile Include="Assets\PlayerControls.cs" />
      <Compile Include="Assets\Scripts\Enums\AnimationType.cs" />
-     <Compile Include="Assets\Scripts\UnitSpawnerSettingsUI.cs" />
+     <Compile Include="Assets\Scripts\Spawn\UnitSpawnerSettingsUI.cs" />
      <Compile Include="Assets\Scripts\Unit.cs" />
      <Compile Include="Assets\Scripts\ClickableElement.cs" />
      <Compile Include="Assets\Scripts\CameraController.cs" />
@@ -63,6 +63,7 @@
      <Folder Include="Assets\TextMesh Pro\Sprites" />
      <Folder Include="Assets\TextMesh Pro\Resources\Sprite Assets" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
+     <Folder Include="Assets\Scripts\Spawn" />
      <Folder Include="Assets\TextMesh Pro\Resources\Fonts &amp; Materials" />
      <Folder Include="Assets\Prefabs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />
