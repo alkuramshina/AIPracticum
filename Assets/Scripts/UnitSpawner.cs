@@ -7,7 +7,7 @@ public class UnitSpawner : MonoBehaviour
     [SerializeField, Tooltip("Стартовая цель")]
     private Transform defaultTarget;
     
-    [SerializeField, Tooltip("Конфигурация юнитов")]
+    [SerializeField, Tooltip("Базовая конфигурация юнитов")]
     private UnitSettings baseUnitSettings;
     
     [SerializeField, Tooltip("Материал юнитов")] 
@@ -59,5 +59,6 @@ public class UnitSpawner : MonoBehaviour
         baseUnitSettings.strongAttack = newSettings.strongAttack;
     }
 
-    public UnitSettings GetCurrentSettings() => baseUnitSettings;
+    public UnitSettings GetCurrentSettings()
+        => baseUnitSettings;
 }

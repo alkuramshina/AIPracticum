@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using Configuration;
 using TMPro;
@@ -20,36 +19,61 @@ public class UnitSettingsUI : MonoBehaviour
 
     [SerializeField] private Button closeButton;
 
-    private float _menuOffset;
     private bool _isOpened;
+    private bool _isSliding;
+
+    private const float SlidingSpeed = .6f;
+    private const float SlidingOffset = 850f;
 
     private void Start()
     {
         closeButton.onClick.AddListener(OnClose);
-        
-        _menuOffset = transform.localScale.x / 2;
-        
+    }
+
+    private void Awake()
+    {
         FillSettingsForm(spawner.GetCurrentSettings());
     }
-    
-    private void Open()
+
+    private void SlideOpen()
     {
+        if (_isSliding || _isOpened)
+        {
+            return;
+        }
+        
         _isOpened = true;
-        StartCoroutine(SlideClose());
+        StartCoroutine(Sliding());
+    }
+    
+    private void SlideClose()
+    {
+        if (_isSliding || !_isOpened)
+        {
+            return;
+        }
+        
+        _isOpened = false;
+        StartCoroutine(Sliding());
     }
  
-    private IEnumerator SlideClose()
+    private IEnumerator Sliding()
     {
-        while (_menuOffset > .3f)
-        {
-            transform.position = Vector3.Lerp(transform.position, new Vector3(transform.position.x + _menuOffset,
-                transform.position.y,
-                transform.position.z), Time.deltaTime * 10f);
+        _isSliding = true;
+        var startingPosition  = transform.position;
+        var finalPosition = new Vector3(transform.position.x + SlidingOffset * (_isOpened ? -1 : 1),
+            transform.position.y,
+            transform.position.z);
 
-            _menuOffset -= Time.deltaTime;
-            
-            yield return new WaitForSeconds(Time.deltaTime);
+        float elapsedTime = 0;
+        while (elapsedTime < SlidingSpeed)
+        {
+            transform.position = Vector3.Lerp(startingPosition, finalPosition, (elapsedTime / SlidingSpeed));
+            elapsedTime += Time.deltaTime;
+            yield return null;
         }
+
+        _isSliding = false;
     }
 
     private void OnClose()
@@ -57,7 +81,7 @@ public class UnitSettingsUI : MonoBehaviour
         var unitSettings = GetSettingsFromForm();
         spawner.ChangeUnitSettings(unitSettings);
 
-        _isOpened = false;
+        SlideClose();
     }
 
     private UnitSettings GetSettingsFromForm()
