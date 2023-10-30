@@ -2,7 +2,6 @@ using System;
 using Configuration;
 using Enums;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 public class Unit : ClickableElement
 {
@@ -16,7 +15,7 @@ public class Unit : ClickableElement
     private int _health;
     private UnitState _state;
 
-    private float _attackDistance = 5f;
+    private float _attackDistance = 2f;
     private float _seekingDistance = 10f;
 
     public EventHandler OnDeath;
@@ -69,26 +68,15 @@ public class Unit : ClickableElement
         }
         else if (_state == UnitState.Fighting)
         {
-            var attackIsMissing = ChancesGood(_unitSettings.missChance);
-            var attackIsCrit = ChancesGood(_unitSettings.critChance);
-
-            var damageFactor = attackIsCrit
-                ? 2
-                : attackIsMissing
-                    ? 0
-                    : 1;
-            
-            var attackIsStrong = ChancesGood(_unitSettings.strongAttack.chanceToUse);
-
-            var damage = (attackIsStrong
-                ? _unitSettings.strongAttack.damage
-                : _unitSettings.quickAttack.damage) * damageFactor;
-            
-            _currentUnitTarget.Damage(damage);
+            var damage = _unitSettings.CalculateDamage();
+            var enemyIsAlive = _currentUnitTarget.DamageAndCheckIfAlive(damage);
+            if (!enemyIsAlive)
+            {
+                _state = UnitState.Seeking;
+                _currentPositionTarget = _defaultTarget.position;
+            }
         }
     }
-
-    private bool ChancesGood(float baseChanceValue) => Random.Range(0, 1) > baseChanceValue / 100;
 
     private void UpdateMovingBehavior()
     {
@@ -135,16 +123,19 @@ public class Unit : ClickableElement
         }
     }
 
-    public void Damage(int damage)
+    private bool DamageAndCheckIfAlive(int damage)
     {
         _health -= damage;
         if (_health <= 0)
         {
             _state = UnitState.Dead;
+            return false;
         }
+
+        return true;
     }
 
-    public UnitType GetUnitType() => _unitSettings.unitType;
+    private UnitType GetUnitType() => _unitSettings.unitType;
 
     public static Unit Spawn(UnitSettings unitSettings, Material material,
         Transform spawnPoint, Transform defaultTarget)
