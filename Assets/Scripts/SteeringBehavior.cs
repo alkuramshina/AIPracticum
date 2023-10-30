@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class SteeringBehavior
+public static class SteeringBehavior
 {
     private const float SlowingRadius = 10f;
     private const float WanderJitter = 40f;

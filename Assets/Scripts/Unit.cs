@@ -1,3 +1,4 @@
+using System;
 using Configuration;
 using Enums;
 using UnityEngine;
@@ -5,7 +6,7 @@ using UnityEngine;
 public class Unit : ClickableElement
 {
     private Transform _defaultTarget;
-    private Transform _currentTarget;
+    private Vector3 _currentTarget;
     
     private UnitSettings _unitSettings;
     
@@ -13,6 +14,7 @@ public class Unit : ClickableElement
     private UnitState _state;
 
     private float _attackDistance = 1f;
+    private float _seekingDistance = 5f;
 
     private CharacterController _characterController;
 
@@ -23,35 +25,76 @@ public class Unit : ClickableElement
 
     protected override void Update()
     {
-        UpdateUnitState();
-        
-        TryMove();
+        UpdateState();
+
+        if (_state == UnitState.Fighting)
+        {
+            UpdateFightingBehavior();
+        }
+        else
+        {
+            UpdateMovingBehavior();
+        }
         
         base.Update();
     }
 
-    private void UpdateUnitState()
+    private void UpdateState()
     {
         // if anyone is around + its attack distance => Fighting
         // if anyone is around => Seeking
         // if at defaultTarget => Idle
         // Wandering
         
-        _state = UnitState.Wandering;
-        _currentTarget = _defaultTarget;
+        // Если еще не дошли до центра или отошли от него далеко
+        if (_state != UnitState.Wandering
+            || Vector3.Distance(transform.position, _currentTarget) >_seekingDistance)
+        {
+            _state = UnitState.Seeking;
+            _currentTarget = _defaultTarget.position;
+        }
+
+        // Если дошли до центра (или любой другой желанной точки)
+        if (_state == UnitState.Seeking
+            && Vector3.Distance(transform.position, _currentTarget) < _seekingDistance)
+        {
+            _state = UnitState.Wandering;
+        }
     }
 
-    private void TryMove()
+    private void UpdateFightingBehavior()
     {
-        if (_state is UnitState.Fighting or UnitState.Idle)
+        if (_state is not UnitState.Fighting)
         {
             return;
         }
+    }
 
-        transform.LookAt(_currentTarget);
-        _characterController.SimpleMove(_currentTarget.position * _unitSettings.speed);
+    private void UpdateMovingBehavior()
+    {
+        if (_state is UnitState.Fighting)
+        {
+            return;
+        }
         
-        // transform.position += steering * Time.deltaTime;
+        transform.LookAt(_currentTarget);
+
+        Vector3 steering;
+        switch (_state)
+        {
+            case UnitState.Pursuing:
+            case UnitState.Seeking:
+                steering = SteeringBehavior.Seek(transform.position, _currentTarget, _unitSettings.speed);
+                break;
+            case UnitState.Wandering:
+                steering = SteeringBehavior.Wander(transform.position, _unitSettings.speed);
+                break;
+            case UnitState.Fighting:
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+
+        transform.position += steering * Time.deltaTime;
     }
     
     public static Unit Spawn(UnitSettings unitSettings, Material material,
