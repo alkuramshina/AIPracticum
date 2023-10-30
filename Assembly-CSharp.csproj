@@ -55,6 +55,8 @@
      <Compile Include="Assets\Scripts\UnitAnimation.cs" />
      <Compile Include="Assets\Scripts\Enums\UnitState.cs" />
      <Compile Include="Assets\Scripts\Utils\ReflectionExtensions.cs" />
+     <Compile Include="Assets\Scripts\Enums\UnitType.cs" />
+     <Compile Include="Assets\Scripts\SteeringBehavior.cs" />
      <Folder Include="Assets" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <Folder Include="Assets\Materials" />

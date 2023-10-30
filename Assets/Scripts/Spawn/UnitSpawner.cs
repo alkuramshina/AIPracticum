@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Configuration;
+using Enums;
 using UnityEngine;
 
 namespace Spawn
@@ -11,7 +12,7 @@ namespace Spawn
     
         [SerializeField, Tooltip("Базовая конфигурация юнитов")]
         private UnitSettings baseUnitSettings;
-    
+
         [SerializeField, Tooltip("Материал юнитов")] 
         private Material baseMaterial;
     

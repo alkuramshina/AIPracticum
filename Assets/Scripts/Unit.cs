@@ -11,11 +11,21 @@ public class Unit : ClickableElement
     
     private int _health;
     private UnitState _state;
-    
+
+    private float _attackDistance = 1f;
+
+    private CharacterController _characterController;
+
+    private void Awake()
+    {
+        _characterController = GetComponent<CharacterController>();
+    }
+
     protected override void Update()
     {
         UpdateUnitState();
-        //TryMove();
+        
+        TryMove();
         
         base.Update();
     }
@@ -37,21 +47,18 @@ public class Unit : ClickableElement
         {
             return;
         }
+
+        transform.LookAt(_currentTarget);
+        _characterController.SimpleMove(_currentTarget.position * _unitSettings.speed);
         
-        if (Vector3.Distance(transform.position, _currentTarget.position) > .3f)
-        {
-            transform.position += Vector3.Lerp(transform.position, _currentTarget.position,
-                _unitSettings.speed * Time.deltaTime);
-        }
+        // transform.position += steering * Time.deltaTime;
     }
     
     public static Unit Spawn(UnitSettings unitSettings, Material material,
         Transform spawnPoint, Transform defaultTarget)
     {
-        var unit = Instantiate(unitSettings.unitPrefab).GetComponent<Unit>();
-        
-        unit.transform.position = spawnPoint.position;
-        unit.transform.rotation = spawnPoint.rotation;
+        var unit = Instantiate(unitSettings.unitPrefab, spawnPoint.position, spawnPoint.rotation)
+            .GetComponent<Unit>();
         
         unit.Init(material, unitSettings, defaultTarget);
         

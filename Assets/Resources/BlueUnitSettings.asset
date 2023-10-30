@@ -24,3 +24,4 @@ MonoBehaviour:
     chanceToUse: 20
   unitPrefab: {fileID: 6785532997973949180, guid: 1525f5d800fe01943a76d77c86f68eb2,
     type: 3}
+  unitType: 3

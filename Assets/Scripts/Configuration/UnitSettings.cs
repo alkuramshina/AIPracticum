@@ -1,4 +1,5 @@
 using System;
+using Enums;
 using UnityEngine;
 using Utils;
 
@@ -18,6 +19,7 @@ namespace Configuration
         [Tooltip("Медленная/Сильная атака"), ShowInSettings("Медленная/Сильная атака")] public AttackSettings strongAttack;
         
         [SerializeField] public Transform unitPrefab;
+        [SerializeField] public UnitType unitType;
     }
 
 
