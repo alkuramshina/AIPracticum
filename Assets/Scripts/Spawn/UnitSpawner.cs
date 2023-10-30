@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Configuration;
 using Enums;
@@ -41,17 +42,23 @@ namespace Spawn
             {
                 return;
             }
-        
+
             _spawnTimer += Time.deltaTime;
             if (_spawnTimer < spawnWaitingTime)
             {
                 return;
             }
-        
+
             var newUnit = Unit.Spawn(baseUnitSettings, baseMaterial, unitSpawnPoint, defaultTarget);
+            newUnit.OnDeath += OnDeath;
+
             _spawnedUnits.Add(newUnit);
-        
             _spawnTimer = 0f;
+        }
+
+        private void OnDeath(object sender, EventArgs e)
+        {
+            _spawnedUnits.Remove((Unit) sender);
         }
 
         public void ChangeUnitSettings(UnitSettings newSettings)

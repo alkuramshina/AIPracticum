@@ -18,12 +18,7 @@ public class Unit : ClickableElement
     private float _attackDistance = 5f;
     private float _seekingDistance = 10f;
 
-    private CharacterController _characterController;
-
-    private void Awake()
-    {
-        _characterController = GetComponent<CharacterController>();
-    }
+    public EventHandler OnDeath;
 
     protected override void Update()
     {
@@ -66,15 +61,16 @@ public class Unit : ClickableElement
 
     private void UpdateFightingBehavior()
     {
-        if (_state != UnitState.Fighting)
+        if (_state == UnitState.Dead)
         {
-            return;
+            OnDeath?.Invoke(this, EventArgs.Empty);
+            Destroy(gameObject);
         }
     }
 
     private void UpdateMovingBehavior()
     {
-        if (_state == UnitState.Fighting)
+        if (_state is UnitState.Fighting or UnitState.Dead)
         {
             return;
         }
@@ -92,6 +88,7 @@ public class Unit : ClickableElement
                 steering = SteeringBehavior.Wander(transform.position, _unitSettings.speed);
                 break;
             case UnitState.Fighting:
+            case UnitState.Dead:
             default:
                 throw new ArgumentOutOfRangeException();
         }
@@ -101,8 +98,8 @@ public class Unit : ClickableElement
 
     private void OnTriggerEnter(Collider other)
     {
-        // Если уже завязались, не переключаемся
-        if (_state is UnitState.Pursuing or UnitState.Fighting)
+        // Если уже завязались или умерли, не переключаемся
+        if (_state is UnitState.Pursuing or UnitState.Fighting or UnitState.Dead)
         {
             return;
         }
