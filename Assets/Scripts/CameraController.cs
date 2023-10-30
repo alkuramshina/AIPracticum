@@ -15,6 +15,9 @@ public class CameraController : MonoBehaviour
 
     [SerializeField] private CinemachineVirtualCamera virtualCamera;
     private float _targetFieldOfView = 50f;
+
+    [SerializeField] private bool edgeScrollingEnabled;
+    [SerializeField] private float edgeScrollingSize;
     
     private PlayerControls _playerControls;
 
@@ -34,10 +37,32 @@ public class CameraController : MonoBehaviour
     private void Move()
     {
         var movementInput = _playerControls.Camera.Movement.ReadValue<Vector2>();
-
         var movementDirection = new Vector3(movementInput.x, 0, movementInput.y);
-        var moveDistance = movingSpeed * Time.deltaTime;
         
+        if (edgeScrollingEnabled)
+        {
+            if (Input.mousePosition.x < edgeScrollingSize)
+            {
+                movementDirection.x -= 1f;
+            }
+            if (Input.mousePosition.x > Screen.width - edgeScrollingSize)
+            {
+                movementDirection.x += 1f;
+            }
+            
+            if (Input.mousePosition.y < edgeScrollingSize)
+            {
+                movementDirection.z -= 1f;
+            }
+            if (Input.mousePosition.y > Screen.height - edgeScrollingSize)
+            {
+                movementDirection.z += 1f;
+            }
+        }
+        
+        
+        
+        var moveDistance = movingSpeed * Time.deltaTime;
         transform.position += movementDirection * moveDistance;
     }
     
