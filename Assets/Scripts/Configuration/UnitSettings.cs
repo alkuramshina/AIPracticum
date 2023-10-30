@@ -26,7 +26,7 @@ namespace Configuration
     [Serializable]
     public struct AttackSettings
     {
-        [Tooltip("Урон"), ShowInSettings("Урон")] public float damage;
+        [Tooltip("Урон"), ShowInSettings("Урон")] public int damage;
         [Tooltip("Шанс использования"), Range(1, 100), ShowInSettings("Шанс использования")] public float chanceToUse;
     }
 }

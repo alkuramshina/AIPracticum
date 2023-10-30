@@ -2,6 +2,7 @@ using System;
 using Configuration;
 using Enums;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Unit : ClickableElement
 {
@@ -66,7 +67,28 @@ public class Unit : ClickableElement
             OnDeath?.Invoke(this, EventArgs.Empty);
             Destroy(gameObject);
         }
+        else if (_state == UnitState.Fighting)
+        {
+            var attackIsMissing = ChancesGood(_unitSettings.missChance);
+            var attackIsCrit = ChancesGood(_unitSettings.critChance);
+
+            var damageFactor = attackIsCrit
+                ? 2
+                : attackIsMissing
+                    ? 0
+                    : 1;
+            
+            var attackIsStrong = ChancesGood(_unitSettings.strongAttack.chanceToUse);
+
+            var damage = (attackIsStrong
+                ? _unitSettings.strongAttack.damage
+                : _unitSettings.quickAttack.damage) * damageFactor;
+            
+            _currentUnitTarget.Damage(damage);
+        }
     }
+
+    private bool ChancesGood(float baseChanceValue) => Random.Range(0, 1) > baseChanceValue / 100;
 
     private void UpdateMovingBehavior()
     {
@@ -113,6 +135,15 @@ public class Unit : ClickableElement
         }
     }
 
+    public void Damage(int damage)
+    {
+        _health -= damage;
+        if (_health <= 0)
+        {
+            _state = UnitState.Dead;
+        }
+    }
+
     public UnitType GetUnitType() => _unitSettings.unitType;
 
     public static Unit Spawn(UnitSettings unitSettings, Material material,
@@ -133,7 +164,6 @@ public class Unit : ClickableElement
         GetComponent<MeshRenderer>().sharedMaterial = material;
 
         _defaultTarget = defaultTarget;
-        
         _unitSettings = unitSettings;
         _health = unitSettings.maxHealth;
     }
