@@ -1,10 +1,12 @@
+using System;
 using System.Collections;
 using Configuration;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Utils;
 
-public class UnitSettingsUI : MonoBehaviour
+public class UnitSpawnerSettingsUI : MonoBehaviour
 {
     [SerializeField] private UnitSpawner spawner;
     
@@ -28,11 +30,18 @@ public class UnitSettingsUI : MonoBehaviour
     private void Start()
     {
         closeButton.onClick.AddListener(OnClose);
+        spawner.OnClickEventHandler += SpawnerOnClickEventHandler;
+    }
+
+    private void SpawnerOnClickEventHandler(object sender, EventArgs e)
+    {
+        SlideOpen();
     }
 
     private void Awake()
     {
         FillSettingsForm(spawner.GetCurrentSettings());
+        gameObject.SetActive(false);
     }
 
     private void SlideOpen()
@@ -43,6 +52,7 @@ public class UnitSettingsUI : MonoBehaviour
         }
         
         _isOpened = true;
+        gameObject.SetActive(true);
         StartCoroutine(Sliding());
     }
     
@@ -54,6 +64,7 @@ public class UnitSettingsUI : MonoBehaviour
         }
         
         _isOpened = false;
+        gameObject.SetActive(false);
         StartCoroutine(Sliding());
     }
  
@@ -110,5 +121,10 @@ public class UnitSettingsUI : MonoBehaviour
         quickAttackChanceInput.text = $"{settings.quickAttack.chanceToUse}";
         strongAttackDamageInput.text = $"{settings.strongAttack.damage}";
         strongAttackChanceInput.text = $"{settings.strongAttack.chanceToUse}";
+    }
+
+    private void OnDisable()
+    {
+        spawner.OnClickEventHandler -= SpawnerOnClickEventHandler;
     }
 }

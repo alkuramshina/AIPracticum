@@ -2,7 +2,7 @@ using Configuration;
 using Enums;
 using UnityEngine;
 
-public class Unit : MonoBehaviour
+public class Unit : ClickableElement
 {
     private Transform _defaultTarget;
     private Transform _currentTarget;
@@ -12,10 +12,12 @@ public class Unit : MonoBehaviour
     private int _health;
     private UnitState _state;
     
-    private void Update()
+    protected override void Update()
     {
         UpdateUnitState();
         //TryMove();
+        
+        base.Update();
     }
 
     private void UpdateUnitState()

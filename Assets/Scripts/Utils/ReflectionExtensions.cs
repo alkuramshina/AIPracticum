@@ -4,19 +4,8 @@ using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
 
-namespace Configuration
+namespace Utils
 {
-    [AttributeUsage(AttributeTargets.Field)]
-    public class ShowInSettingsAttribute : Attribute
-    {
-        public ShowInSettingsAttribute(string title)
-        {
-            Title = title;
-        }
-        
-        public string Title { get; set; }
-    }
-
     public static class ReflectionExtensions
     {
         public static IEnumerable<(string, string)> GetFieldsToShowInSettings(this Type type, object objectValue)

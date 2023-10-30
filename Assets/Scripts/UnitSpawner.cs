@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Configuration;
 using UnityEngine;
 
-public class UnitSpawner : MonoBehaviour
+public class UnitSpawner : ClickableElement
 {
     [SerializeField, Tooltip("Стартовая цель")]
     private Transform defaultTarget;
@@ -25,8 +25,10 @@ public class UnitSpawner : MonoBehaviour
     private readonly List<Unit> _spawnedUnits = new();
     private float _spawnTimer;
 
-    private void Update()
+    protected override void Update()
     {
+        base.Update();
+        
         TrySpawn();
     }
 

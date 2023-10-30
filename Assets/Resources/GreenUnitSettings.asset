@@ -22,5 +22,5 @@ MonoBehaviour:
   strongAttack:
     damage: 20
     chanceToUse: 20
-  unitPrefab: {fileID: 4716746838255871979, guid: 7cc9c30666991484eac8b191ee83f19a,
+  unitPrefab: {fileID: 6785532997973949180, guid: f78d9d7ae9a53e44194e0537a8bbf8a3,
     type: 3}
