@@ -15,7 +15,7 @@ public class Unit : MonoBehaviour
     private void Update()
     {
         UpdateUnitState();
-        TryMove();
+        //TryMove();
     }
 
     private void UpdateUnitState()

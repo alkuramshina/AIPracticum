@@ -49,7 +49,7 @@ public class UnitSpawner : MonoBehaviour
         _spawnTimer = 0f;
     }
 
-    private void ChangeUnitSettings(UnitSettings newSettings)
+    public void ChangeUnitSettings(UnitSettings newSettings)
     {
         baseUnitSettings.speed = newSettings.speed;
         baseUnitSettings.maxHealth = newSettings.maxHealth;
@@ -58,4 +58,6 @@ public class UnitSpawner : MonoBehaviour
         baseUnitSettings.quickAttack = newSettings.quickAttack;
         baseUnitSettings.strongAttack = newSettings.strongAttack;
     }
+
+    public UnitSettings GetCurrentSettings() => baseUnitSettings;
 }
